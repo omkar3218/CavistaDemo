@@ -1,6 +1,6 @@
 package com.omkar.cavistademo.di
 
-import com.omkar.cavistademo.MainActivity
+import com.omkar.cavistademo.ui.view.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

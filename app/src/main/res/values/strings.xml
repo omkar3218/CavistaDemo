@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">CavistaDemo</string>
+    <string name="app_name">ImageSearchApp</string>
+    <string name="app_bar_name">Search Screen</string>
+    <string name="no_data_available_txt">No data available.</string>
+    <string name="search_here">Search here</string>
+    <string name="submit_text">Submit</string>
+
+
 </resources>
