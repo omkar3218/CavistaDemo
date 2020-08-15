@@ -10,6 +10,9 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
+/**
+ *  Dependency provider
+ */
 @Module
 class AppModule {
 

@@ -90,9 +90,13 @@ class ImageListFragment : Fragment() {
         super.onAttach(context)
     }
 
+    /**
+     *  Observe the model changes once user search for the image or in case of infinite scroll
+     *  Hide/show the progress bar while data loading ongoing
+     */
     private fun observeViewModel() {
         viewModel.articleLiveData.observe(viewLifecycleOwner, Observer {
-            activateEndScrolling = it.isNotEmpty() && it.size >= 10
+            activateEndScrolling = it.isNotEmpty() && it.size >= 50
             for (t in it) {
                 if (t.images != null) {
                     for (img in t.images!!) {
@@ -119,6 +123,9 @@ class ImageListFragment : Fragment() {
     }
 
 
+    /**
+     *  Load next page of the image data when user scroll the page
+     */
     private fun loadNextPage(currentPage: Int, searchTerm: String) {
         viewModel.fetchImageList(currentPage, searchTerm)
     }
@@ -150,6 +157,10 @@ class ImageListFragment : Fragment() {
 
     }
 
+
+    /**
+     *  Navigate user to image details screen once user click on a particular image
+     */
     fun navigateToImageDetailsScreen(image: Image) {
         val intent = Intent(activity, ImageDetailsActivity::class.java)
         intent.putExtra(getString(R.string.key_image_title), image.imageTitle)

@@ -19,6 +19,10 @@ class ImageListViewModel @Inject constructor(override var coroutineContext: Coro
 
     var articleLiveData = MutableLiveData<List<Data>>()
 
+
+    /**
+     *  Fetch the image list based on the search term entered by the user and page no.
+     */
     fun fetchImageList(pageNumber: Int, searchTerm: String) {
         launch {
             isLoading.postValue(true)
@@ -36,6 +40,9 @@ class ImageListViewModel @Inject constructor(override var coroutineContext: Coro
         }
     }
 
+    /**
+     *  Debounce the search after every 250 milliseconds
+     */
     internal class DebouncingQueryTextListener(
         lifecycle: Lifecycle,
         private val onDebouncingQueryTextChange: (String?) -> Unit

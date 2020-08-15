@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ImageSearchApp</string>
+    <string name="app_name">Image Search App</string>
 
     <!--Search screen strings -->
     <string name="no_data_available_txt">No data available.</string>
@@ -10,7 +10,9 @@
     <string name="load_error_msg">Error loading the image.</string>
     <string name="save_error_msg">Error while saving the comment.</string>
     <string name="save_success_msg">Saved successfully.</string>
-    <string name="enter_comment_msg">Please enter comments to submit.</string>
+    <string name="enter_comment_msg">Please enter your comment.</string>
+    <string name="already_exists_msg">Already exists.</string>
+
 
     <!--Common strings -->
     <string name="key_image_id">image_id</string>

@@ -28,6 +28,9 @@ constructor(private val gson: Gson) {
     private var retrofit: Retrofit? = null
 
 
+    /**
+     *  This method will print the logs of the request and response with header and body on console
+     */
     private val logger: HttpLoggingInterceptor
         get() {
             val loggingInterceptor = HttpLoggingInterceptor()
@@ -39,6 +42,9 @@ constructor(private val gson: Gson) {
             return loggingInterceptor
         }
 
+    /**
+     *  This method will add authorisation value in the header of the request
+     */
     private val headerInterceptor = Interceptor { chain ->
         val original = chain.request()
         val request = original.newBuilder()
@@ -55,6 +61,9 @@ constructor(private val gson: Gson) {
         okHttpBuilder.readTimeout(TIMEOUT_READ.toLong(), TimeUnit.SECONDS)
     }
 
+    /**
+     *  Retrofit instance created for an api call
+     */
     fun <S> createService(serviceClass: Class<S>, baseUrl: String): S {
         val client = okHttpBuilder.build()
         retrofit = Retrofit.Builder()

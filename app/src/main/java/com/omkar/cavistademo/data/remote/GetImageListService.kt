@@ -6,6 +6,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+/**
+ * Retrofit service with the required path and query string
+ */
 interface GetImageListService {
     @GET("{page}")
     suspend fun fetchImageList(

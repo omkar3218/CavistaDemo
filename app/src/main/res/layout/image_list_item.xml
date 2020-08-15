@@ -19,7 +19,7 @@
             android:layout_height="100dp"
             android:layout_margin="@dimen/margin_8"
             android:scaleType="centerCrop"
-            app:articleImage="@{imageLink}"
+            app:image="@{imageLink}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

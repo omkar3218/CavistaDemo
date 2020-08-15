@@ -8,6 +8,9 @@ import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
+/**
+ *  Components
+ */
 @Singleton
 @Component(
     modules = [AndroidInjectionModule::class,
@@ -18,6 +21,9 @@ import javax.inject.Singleton
         ViewModelModule::class]
 )
 
+/**
+ *  Interface
+ */
 interface AppComponent : AndroidInjector<CavistaDemoApplication> {
     @Component.Builder
     interface Builder {

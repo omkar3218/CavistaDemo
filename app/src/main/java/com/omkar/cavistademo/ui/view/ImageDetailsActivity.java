@@ -55,29 +55,44 @@ public class ImageDetailsActivity extends AppCompatActivity {
         imageDetailsViewModel.fetchCommentFromDB(imageId);
     }
 
+
+    /**
+     *  validation of the comment field and save the comment in the database
+     */
     public void saveCommentInDB(View view) {
-        if (!TextUtils.isEmpty(Objects.requireNonNull(imageDetailsBinding.commentsEditText.getText()).toString()))
-            imageDetailsViewModel.saveCommentInDB(imageId, imageDetailsBinding.commentsEditText.getText().toString());
-        else
+        if (!TextUtils.isEmpty(Objects.requireNonNull(imageDetailsBinding.commentsEditText.getText()).toString())) {
+            imageDetailsViewModel.isExistingCommentForTheImage(imageId, Objects.requireNonNull(imageDetailsBinding.commentsEditText.getText()).toString());
+        } else
             showToast(getString(R.string.enter_comment_msg));
     }
 
+    /**
+     *  Observe the model changes for fetch the comment from DB, inserting the new comment in DB or update the existing comments
+     */
     private void observeViewModel() {
         imageDetailsViewModel.isSaved().observe(this, isSaved -> {
             if (isSaved) {
                 showToast(getString(R.string.save_success_msg));
-                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                assert imm != null;
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 imageDetailsBinding.commentsEditText.clearFocus();
+                hideSoftKeyboard();
             } else
                 showToast(getString(R.string.save_error_msg));
         });
+        imageDetailsViewModel.isExistingComment().observe(this, isExists -> {
+            if (!isExists) {
+                imageDetailsViewModel.saveCommentInDB(imageId, Objects.requireNonNull(imageDetailsBinding.commentsEditText.getText()).toString());
+            } else
+                showToast(getString(R.string.already_exists_msg));
+        });
+
         imageDetailsViewModel.getComment().observe(this, s -> imageDetailsBinding.setImageComment(s));
     }
 
+    /**
+     *  print the toast message on screen
+     */
     private void showToast(final String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -88,6 +103,9 @@ public class ImageDetailsActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     *  Update user for the loading progress of the image
+     */
     private void setImage() {
         String imageUrl = getIntent().getStringExtra(getString(R.string.key_image_link));
         if (imageUrl != null) {
@@ -109,6 +127,15 @@ public class ImageDetailsActivity extends AppCompatActivity {
                     }).into(imageDetailsBinding.image);
 
         }
+    }
+
+    /**
+     *  hide the soft keyboard once action completed
+     */
+    private void hideSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        assert imm != null;
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
 }

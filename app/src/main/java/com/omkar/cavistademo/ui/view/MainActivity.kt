@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        //supportActionBar?.setDisplayShowTitleEnabled(true)
         if (savedInstanceState == null)
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, ImageListFragment.newInstance()).commit()

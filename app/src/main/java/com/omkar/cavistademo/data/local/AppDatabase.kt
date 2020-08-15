@@ -26,23 +26,36 @@ class AppDatabase private constructor() {
             .equalTo("id", imageId).findFirst()?.comments
     }
 
+    fun isExistingCommentForTheImage(imageId: String,comment: String): Boolean {
+        val image: Image? =
+            Realm.getDefaultInstance()!!.where(Image::class.java)
+                .equalTo("id", imageId).findFirst()
+        return image!=null && image.comments==comment
+    }
+
+
     fun saveCommentForTheImage(imageId: String, comment: String): Boolean {
-        var image: Image? =
+        val image: Image? =
             Realm.getDefaultInstance()!!.where(Image::class.java)
                 .equalTo("id", imageId).findFirst()
         return if (image != null) {
-            Realm.getDefaultInstance()!!.beginTransaction()
-            image.comments = comment
-            Realm.getDefaultInstance()!!.commitTransaction()
-            true
+            with(Realm.getDefaultInstance()) {
+                beginTransaction()
+                image.comments = comment
+                copyToRealmOrUpdate(image)
+                commitTransaction()
+                true
+            }
         } else {
-            Realm.getDefaultInstance()!!.beginTransaction()
-            image = Image()
-            image.id = imageId
-            image.comments = comment
-            Realm.getDefaultInstance().copyToRealm(image)
-            Realm.getDefaultInstance()!!.commitTransaction()
-            true
+            with(Realm.getDefaultInstance()) {
+                beginTransaction()
+                val newImage = Image()
+                newImage.id = imageId
+                newImage.comments = comment
+                copyToRealmOrUpdate(newImage)
+                commitTransaction()
+                true
+            }
         }
 
     }

@@ -5,11 +5,17 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
+/**
+ * Class will check for active internet connection before the api call
+ */
 class Network {
     companion object Utils {
 
         fun isConnected(context: Context): Boolean {
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            /**
+             * This method will provide network status based on the build version of the sdk
+             */
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val capabilities =
                     cm.getNetworkCapabilities(cm.activeNetwork)
