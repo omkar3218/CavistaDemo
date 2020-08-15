@@ -28,6 +28,10 @@ class ImageListAdapter(
         if (articleDataModels != null) {
             holder.binding.imageLink = articleDataModels[position].link
         }
+        holder.binding.userImageView.setOnClickListener {
+            articleDataModels?.get(position)
+                ?.let { it1 -> context.navigateToImageDetailsScreen(it1) }
+        }
 
     }
 

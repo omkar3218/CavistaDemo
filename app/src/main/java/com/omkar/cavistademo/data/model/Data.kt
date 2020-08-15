@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmList
 import io.realm.RealmObject
 
-open class Data : RealmObject(){
+open class Data : RealmObject() {
     @SerializedName("id")
     @Expose
     var id: String? = null

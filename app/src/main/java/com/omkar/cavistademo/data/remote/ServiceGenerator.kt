@@ -49,7 +49,6 @@ constructor(private val gson: Gson) {
     }
 
     init {
-       //okHttpBuilder.addInterceptor{ it.proceed(it.request().newBuilder().addHeader("Cache-Control", "no-store").build())}
         okHttpBuilder.addInterceptor(headerInterceptor)
         okHttpBuilder.addInterceptor(logger)
         okHttpBuilder.connectTimeout(TIMEOUT_CONNECT.toLong(), TimeUnit.SECONDS)

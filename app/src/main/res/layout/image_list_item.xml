@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="imageLink"
             type="String" />
@@ -13,10 +14,10 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_margin="@dimen/margin_8"
             android:id="@+id/userImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_margin="@dimen/margin_8"
             android:scaleType="centerCrop"
             app:articleImage="@{imageLink}"
             app:layout_constraintStart_toStartOf="parent"

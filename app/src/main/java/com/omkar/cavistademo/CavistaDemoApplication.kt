@@ -1,5 +1,6 @@
 package com.omkar.cavistademo
 
+import com.omkar.cavistademo.data.local.AppDatabase
 import com.omkar.cavistademo.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
@@ -27,6 +28,8 @@ open class CavistaDemoApplication : DaggerApplication(), HasAndroidInjector {
 
     override fun onTerminate() {
         super.onTerminate()
+        AppDatabase.instance?.closeDB()
+
     }
 
 }

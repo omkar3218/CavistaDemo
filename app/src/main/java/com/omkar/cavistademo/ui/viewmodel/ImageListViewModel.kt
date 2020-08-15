@@ -19,7 +19,7 @@ class ImageListViewModel @Inject constructor(override var coroutineContext: Coro
 
     var articleLiveData = MutableLiveData<List<Data>>()
 
-    fun fetchArticleList(pageNumber: Int, searchTerm: String) {
+    fun fetchImageList(pageNumber: Int, searchTerm: String) {
         launch {
             isLoading.postValue(true)
             when (val response = remoteRepository.requestImages(pageNumber, searchTerm)) {
@@ -36,7 +36,10 @@ class ImageListViewModel @Inject constructor(override var coroutineContext: Coro
         }
     }
 
-    internal class DebouncingQueryTextListener(lifecycle: Lifecycle, private val onDebouncingQueryTextChange: (String?) -> Unit) : SearchView.OnQueryTextListener,
+    internal class DebouncingQueryTextListener(
+        lifecycle: Lifecycle,
+        private val onDebouncingQueryTextChange: (String?) -> Unit
+    ) : SearchView.OnQueryTextListener,
         LifecycleObserver {
         var debouncePeriod: Long = 250
 
@@ -68,7 +71,6 @@ class ImageListViewModel @Inject constructor(override var coroutineContext: Coro
             searchJob?.cancel()
         }
     }
-
 
 
 }
