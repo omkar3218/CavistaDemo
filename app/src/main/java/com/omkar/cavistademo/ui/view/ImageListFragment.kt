@@ -96,7 +96,7 @@ class ImageListFragment : Fragment() {
      */
     private fun observeViewModel() {
         viewModel.articleLiveData.observe(viewLifecycleOwner, Observer {
-            activateEndScrolling = it.isNotEmpty() && it.size >= 50
+            activateEndScrolling = it.isNotEmpty() && it.size >= 10
             for (t in it) {
                 if (t.images != null) {
                     for (img in t.images!!) {
