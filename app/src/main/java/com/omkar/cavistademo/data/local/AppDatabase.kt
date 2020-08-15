@@ -9,7 +9,7 @@ class AppDatabase private constructor() {
 
 
     private fun prepareRealmInstance() {
-        val config = RealmConfiguration.Builder().name("searchapp.realm")
+        val config = RealmConfiguration.Builder().name("search.realm")
             .schemaVersion(BuildConfig.SCHEMA_VERSION.toLong())
             .build()
         Realm.setDefaultConfiguration(config)
@@ -30,11 +30,11 @@ class AppDatabase private constructor() {
         var image: Image? =
             Realm.getDefaultInstance()!!.where(Image::class.java)
                 .equalTo("id", imageId).findFirst()
-        if (image != null) {
+        return if (image != null) {
             Realm.getDefaultInstance()!!.beginTransaction()
             image.comments = comment
             Realm.getDefaultInstance()!!.commitTransaction()
-            return true
+            true
         } else {
             Realm.getDefaultInstance()!!.beginTransaction()
             image = Image()
@@ -42,7 +42,7 @@ class AppDatabase private constructor() {
             image.comments = comment
             Realm.getDefaultInstance().copyToRealm(image)
             Realm.getDefaultInstance()!!.commitTransaction()
-            return true
+            true
         }
 
     }

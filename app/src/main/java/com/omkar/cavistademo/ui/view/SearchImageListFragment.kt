@@ -31,7 +31,7 @@ class SearchImageListFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    lateinit var viewModel: ImageListViewModel
+    private lateinit var viewModel: ImageListViewModel
 
     companion object {
         fun newInstance() = SearchImageListFragment()
@@ -152,9 +152,9 @@ class SearchImageListFragment : Fragment() {
 
     fun navigateToImageDetailsScreen(image: Image) {
         val intent = Intent(activity, ImageDetailsActivity::class.java)
-        intent.putExtra("image_title", image.imageTitle)
-        intent.putExtra("image_id", image.id)
-        intent.putExtra("image_link", image.link)
+        intent.putExtra(getString(R.string.key_image_title), image.imageTitle)
+        intent.putExtra(getString(R.string.key_image_id), image.id)
+        intent.putExtra(getString(R.string.key_image_link), image.link)
         activity?.startActivity(intent)
     }
 

@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -34,16 +33,12 @@ import dagger.android.AndroidInjection;
 public class ImageDetailsActivity extends AppCompatActivity {
 
     private String imageId;
-    private String imageUrl;
-    private String imageTitle;
     private ActivityImageDetailsBinding imageDetailsBinding;
 
     @Inject
     ViewModelFactory viewModelFactory;
 
-
-    ImageDetailsViewModel imageDetailsViewModel;
-
+    private ImageDetailsViewModel imageDetailsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,43 +47,33 @@ public class ImageDetailsActivity extends AppCompatActivity {
         imageDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_image_details);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         imageDetailsViewModel = viewModelFactory.create(ImageDetailsViewModel.class);
-        imageId = getIntent().getStringExtra("image_id");
-        imageTitle = getIntent().getStringExtra("image_title");
-        imageUrl = getIntent().getStringExtra("image_link");
-        imageDetailsBinding.setImageLink(imageUrl);
-        getSupportActionBar().setTitle(imageTitle);
+        imageId = getIntent().getStringExtra(getString(R.string.key_image_id));
+        String imageTitle = getIntent().getStringExtra(getString(R.string.key_image_title));
+        getSupportActionBar().setTitle(imageTitle != null ? imageTitle : "");
         setImage();
         observeViewModel();
         imageDetailsViewModel.fetchCommentFromDB(imageId);
     }
 
     public void saveCommentInDB(View view) {
-        if (!TextUtils.isEmpty(imageDetailsBinding.commentsEditText.getText().toString()))
+        if (!TextUtils.isEmpty(Objects.requireNonNull(imageDetailsBinding.commentsEditText.getText()).toString()))
             imageDetailsViewModel.saveCommentInDB(imageId, imageDetailsBinding.commentsEditText.getText().toString());
         else
-            showToast("Please enter comments to submit.");
+            showToast(getString(R.string.enter_comment_msg));
     }
 
     private void observeViewModel() {
-        imageDetailsViewModel.isSaved().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isSaved) {
-                if (isSaved) {
-                    showToast("Saved successfully.");
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    assert imm != null;
-                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                    imageDetailsBinding.commentsEditText.clearFocus();
-                } else
-                    showToast("Error while saving the comment.");
-            }
+        imageDetailsViewModel.isSaved().observe(this, isSaved -> {
+            if (isSaved) {
+                showToast(getString(R.string.save_success_msg));
+                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                assert imm != null;
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                imageDetailsBinding.commentsEditText.clearFocus();
+            } else
+                showToast(getString(R.string.save_error_msg));
         });
-        imageDetailsViewModel.getComment().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                imageDetailsBinding.setImageComment(s);
-            }
-        });
+        imageDetailsViewModel.getComment().observe(this, s -> imageDetailsBinding.setImageComment(s));
     }
 
     private void showToast(final String message) {
@@ -103,24 +88,27 @@ public class ImageDetailsActivity extends AppCompatActivity {
         return true;
     }
 
-    public void setImage() {
-        Glide.with(this)
-                .load(imageUrl)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        imageDetailsBinding.progressBar.setVisibility(View.GONE);
-                        showToast("Error loading the image.");
-                        return false;
-                    }
+    private void setImage() {
+        String imageUrl = getIntent().getStringExtra(getString(R.string.key_image_link));
+        if (imageUrl != null) {
+            Glide.with(this)
+                    .load(imageUrl)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            imageDetailsBinding.progressBar.setVisibility(View.GONE);
+                            showToast(getString(R.string.load_error_msg));
+                            return false;
+                        }
 
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        imageDetailsBinding.progressBar.setVisibility(View.GONE);
-                        return false;
-                    }
-                }).into(imageDetailsBinding.image);
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            imageDetailsBinding.progressBar.setVisibility(View.GONE);
+                            return false;
+                        }
+                    }).into(imageDetailsBinding.image);
 
+        }
     }
 
 }

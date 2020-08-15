@@ -41,7 +41,7 @@ class ImageListViewModel @Inject constructor(override var coroutineContext: Coro
         private val onDebouncingQueryTextChange: (String?) -> Unit
     ) : SearchView.OnQueryTextListener,
         LifecycleObserver {
-        var debouncePeriod: Long = 250
+        private var debouncePeriod: Long = 250
 
         private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 

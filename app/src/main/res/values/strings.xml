@@ -1,9 +1,20 @@
 <resources>
     <string name="app_name">ImageSearchApp</string>
-    <string name="app_bar_name">Search Screen</string>
+
+    <!--Search screen strings -->
     <string name="no_data_available_txt">No data available.</string>
     <string name="search_here">Search here</string>
-    <string name="submit_text">Submit</string>
 
+    <!--Image details screen strings -->
+    <string name="submit_text">Submit</string>
+    <string name="load_error_msg">Error loading the image.</string>
+    <string name="save_error_msg">Error while saving the comment.</string>
+    <string name="save_success_msg">Saved successfully.</string>
+    <string name="enter_comment_msg">Please enter comments to submit.</string>
+
+    <!--Common strings -->
+    <string name="key_image_id">image_id</string>
+    <string name="key_image_title">image_title</string>
+    <string name="key_image_link">image_url</string>
 
 </resources>

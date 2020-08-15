@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatImageView
-            app:layout_constraintBottom_toTopOf="@+id/commentsEditText"
+            app:layout_constraintBottom_toTopOf="@+id/submitButton"
             android:layout_marginTop="@dimen/margin_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
