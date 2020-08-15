@@ -19,7 +19,7 @@ import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 
-class SearchImageListFragment : Fragment() {
+class ImageListFragment : Fragment() {
 
     private lateinit var binding: SearchImageListFragmentBinding
 
@@ -34,7 +34,7 @@ class SearchImageListFragment : Fragment() {
     private lateinit var viewModel: ImageListViewModel
 
     companion object {
-        fun newInstance() = SearchImageListFragment()
+        fun newInstance() = ImageListFragment()
     }
 
     private var page: Int = 1

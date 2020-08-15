@@ -10,7 +10,7 @@ import com.omkar.cavistademo.databinding.ImageListItemBinding
 
 class ImageListAdapter(
     private val articleDataModels: List<Image>?,
-    private var context: SearchImageListFragment
+    private var context: ImageListFragment
 ) :
     RecyclerView.Adapter<ImageListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

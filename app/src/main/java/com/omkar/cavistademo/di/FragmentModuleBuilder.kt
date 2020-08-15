@@ -1,6 +1,6 @@
 package com.omkar.cavistademo.di
 
-import com.omkar.cavistademo.ui.view.SearchImageListFragment
+import com.omkar.cavistademo.ui.view.ImageListFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -9,6 +9,6 @@ import dagger.android.ContributesAndroidInjector
 abstract class FragmentModuleBuilder {
 
     @ContributesAndroidInjector
-    abstract fun contributeImageListFragment(): SearchImageListFragment
+    abstract fun contributeImageListFragment(): ImageListFragment
 
 }

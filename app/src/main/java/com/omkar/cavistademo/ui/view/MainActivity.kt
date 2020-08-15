@@ -14,6 +14,6 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         if (savedInstanceState == null)
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, SearchImageListFragment.newInstance()).commit()
+                .replace(R.id.fragment_container, ImageListFragment.newInstance()).commit()
     }
 }
