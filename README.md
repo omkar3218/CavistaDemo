@@ -1,9 +1,6 @@
 # CavistaDemo
-Project for the assignment of Cavista/Axxess
 
 Name of the project : Image Search App
-
-Project Introduction : This is assignment project.
 
 Software Architecture : MVVM
 
